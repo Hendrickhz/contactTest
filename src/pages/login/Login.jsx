@@ -8,7 +8,6 @@ import { useForm } from "@mantine/form";
 import { BiKey } from "react-icons/bi";
 import { GoMail } from "react-icons/go";
 import { FcGoogle } from "react-icons/fc";
-import { SyncLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 
 const Login = () => {

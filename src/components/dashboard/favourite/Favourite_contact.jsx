@@ -1,31 +1,26 @@
-import React, { useEffect } from "react";
-import {
-  useDeleteContactMutation,
-  useGetAllContactsQuery,
-} from "../../../redux/api/contactApi";
-import { BsFillPersonPlusFill, BsThreeDotsVertical } from "react-icons/bs";
-import { BiSearchAlt } from "react-icons/bi";
+import React from "react";
+import { useDeleteContactMutation } from "../../../redux/api/contactApi";
+import {  BsThreeDotsVertical } from "react-icons/bs";
+
 import { useNavigate } from "react-router-dom";
-import { Menu, Table } from "@mantine/core";
+import { Menu } from "@mantine/core";
 import { FaEye, FaTrash } from "react-icons/fa";
 import { MdModeEditOutline, MdOutlineFavorite } from "react-icons/md";
 import "./Favourite_contact.css";
 import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
-import { Input } from "@material-tailwind/react";
 import "../../contacts/contactTable.css";
 import {
-  addContacts,
   removeFavorite,
   setFavorite,
-  setSearchTerm,
   setVisit,
 } from "../../../redux/feature/contactSlice";
 import Cookies from "js-cookie";
+import ShowTable from "../../contacts/ShowTable";
+import NoContactYet from "../../contacts/NoContactYet";
 
 const Favourite_contact = () => {
   const token = Cookies.get("token");
-  // const { data, isLoading, isError, isSuccess } = useGetAllContactsQuery(token);
   const [deleteContact] = useDeleteContactMutation();
   const nav = useNavigate();
 
@@ -52,13 +47,7 @@ const Favourite_contact = () => {
   console.log(favorite);
   console.log(contactsData);
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(addContacts(data?.contacts.data));
-  // }, [data]);
 
-  // if (isLoading) {
-  //   return <Loading />;
-  // }
   if (true) {
     if (favorite?.length > 0) {
       const displayContactsData =
@@ -87,7 +76,7 @@ const Favourite_contact = () => {
               <td className=" hide-on-mobile ">{contact?.address}</td>
               <td className="">
                 <div className=" child flex items-center gap-3">
-                <MdOutlineFavorite
+                  <MdOutlineFavorite
                     onClick={() => {
                       if (contact?.isFavourite) {
                         dispatch(removeFavorite(contact));
@@ -112,8 +101,9 @@ const Favourite_contact = () => {
                         icon={<FaEye />}
                         component="a"
                         onClick={() => {
-                          dispatch(setVisit(contact))
-                          nav(`/contacts/${contact.id}`)}}
+                          dispatch(setVisit(contact));
+                          nav(`/contacts/${contact.id}`);
+                        }}
                       >
                         View
                       </Menu.Item>
@@ -139,64 +129,15 @@ const Favourite_contact = () => {
             </tr>
           ))
         );
-      return (
-        <div className="md:w-[80%] w-[90%] mx-auto  lg:m-0">
-          <div className="my-2">
-            <div className="relative flex w-full gap-2 md:w-max ">
-              <Input
-                type="search"
-                label="Search here..."
-                className="pr-20"
-                icon={<BiSearchAlt />}
-                onChange={(e) => dispatch(setSearchTerm(e.target.value))}
-                containerProps={{
-                  className: "min-w-[288px]",
-                }}
-              />
-            </div>
-          </div>
-          <Table highlightOnHover className="select-none">
-          <colgroup>
-              <col style={{ width: "30%" }} /> {/* Always show the name column */}
-              <col style={{ width: "30%" }} className="hide-on-mobile"/> {/* Hide on mobile */}
-              <col style={{ width: "30%" }} className="hide-on-mobile"/> {/* Hide on mobile */}
-              <col style={{ width: "10%" }} /> {/* Hide on mobile */}
-            </colgroup>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th className="hide-on-mobile">Phone Number</th> {/* Hide on mobile */}
-                <th className="hide-on-mobile">Address</th> {/* Hide on mobile */}
-                <th className=""></th> {/* Hide on mobile */}
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        </div>
-      );
+      return <ShowTable rows={rows} />;
     } else if (favorite?.length == 0) {
       return (
-        <div className=" w-full min-h-[80vh] flex justify-center items-center">
-          <div className="">
-            <img
-              className="w-[150px] mx-auto"
-              src="public\empty-box.png"
-              alt="empty-contact=img"
-            />
-            <div className=" mt-5 flex items-center flex-col gap-3">
-              <p className=" text-color">
-                Looks like you haven't added any contacts yet.
-              </p>
-              <button
-                onClick={() => nav("/dashboard")}
-                className="  btn-color px-4 py-2 flex items-center gap-2 rounded tracking-wider shadow-sm hover:bg-orange-700 duration-300"
-              >
-                {" "}
-                <BsFillPersonPlusFill /> Add Contact
-              </button>
-            </div>
-          </div>
-        </div>
+     
+        <NoContactYet
+          mainText={"Looks like you haven't added any contacts yet."}
+          btnText={"Add Favourite"}
+          navLink={"dashboard"}
+        />
       );
     }
   }

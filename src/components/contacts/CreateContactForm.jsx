@@ -1,5 +1,5 @@
-import { TextInput, Textarea } from "@mantine/core";
-import { isEmail, isNotEmpty, useForm } from "@mantine/form";
+import { TextInput } from "@mantine/core";
+import {  useForm } from "@mantine/form";
 import React from "react";
 import { useCreateContactMutation } from "../../redux/api/contactApi";
 import { BsFillPersonFill, BsTelephoneFill } from "react-icons/bs";

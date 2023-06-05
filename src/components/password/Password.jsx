@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { useForm } from "@mantine/form";
-import { PasswordInput, Group, Button, Box } from "@mantine/core";
+import { PasswordInput,  Box } from "@mantine/core";
 import { usePasswordChangingMutation } from "../../redux/api/authApi";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";

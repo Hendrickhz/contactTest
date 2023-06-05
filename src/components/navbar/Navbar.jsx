@@ -5,7 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../sidebar/Sidebar";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import Cookies from "js-cookie";
 import { useLogoutMutation } from "../../redux/api/authApi";
 import { removeUser } from "../../redux/feature/authSlice";

@@ -1,6 +1,6 @@
 import { TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   useGetSingleContactQuery,
   useUpdateContactMutation,
@@ -26,7 +26,7 @@ const EditContactForm = () => {
   } = useGetSingleContactQuery({ id, token });
 
   const oldData = data?.contact;
-  console.log(oldData);
+
   
   const [updateContact] = useUpdateContactMutation();
   const nav = useNavigate();
@@ -65,7 +65,6 @@ const EditContactForm = () => {
       <div className=" max-w-[500px]">
         <form
           onSubmit={form.onSubmit(async (values) => {
-            console.log(values);
             const data = await updateContact({
               data: values,
               token,
